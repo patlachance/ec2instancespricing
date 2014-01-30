@@ -478,6 +478,7 @@ def get_ec2_ondemand_instances_prices(filter_region=None, filter_instance_type=N
                                             continue
 
                                         instance_types.append({
+                                            "category" : instance_type,
                                             "type" : _type,
                                             "os" : price_data["name"],
                                             "price" : price,
@@ -571,11 +572,11 @@ if __name__ == "__main__":
         print x
     elif args.format == "csv":
         if args.type == "ondemand":
-            print "region,type,os,price,vcpu,ecu,memory,storage"
+            print "region,category,type,os,price,vcpu,ecu,memory,storage"
             for r in data["regions"]:
                 region_name = r["region"]
                 for it in r["instanceTypes"]:
-                    print "%s,%s,%s,%s,%s,%s,%s,%s" % (region_name, it["type"], it["os"], none_as_string(it["price"]), it["vCPU"], it["ECU"], it["memoryGiB"], it["storageGB"])
+                    print "%s,%s,%s,%s,%s,%s,%s,%s,%s" % (region_name, it["category"], it["type"], it["os"], none_as_string(it["price"]), it["vCPU"], it["ECU"], it["memoryGiB"], it["storageGB"])
         elif args.type == "reserved":
             print "region,type,os,utilization,term,price,upfront"
             for r in data["regions"]:
